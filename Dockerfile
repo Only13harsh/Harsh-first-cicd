@@ -1,4 +1,4 @@
-FROM python:3.10  # Explicitly use Python 3.10
+FROM python:3.10  # Explicit Python version
 
 WORKDIR /data
 
@@ -7,10 +7,12 @@ RUN apt-get update && apt-get install -y python3-distutils
 
 COPY . .
 
-# Install Django and dependencies
+# Install Django
 RUN pip install django==3.2
 
 # Run migrations
 RUN python manage.py migrate
 
+# Expose port and start server
 EXPOSE 8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
